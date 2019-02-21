@@ -1,6 +1,11 @@
 \documentclass[a4paper, AutoFakeBold]{article}
 
+\usepackage{setspace}
+
 \usepackage{nsfc}
+
+\usepackage[resetlabels]{multibib}
+\newcites{pub}{发表论文}
 
 \begin{document}
 
@@ -20,14 +25,13 @@
 \section{项目的立项依据\note{研究意义、国内外研究现状及发展动态分析，需结合科学
     研究发展趋势来论述科学意义；或结合国民经济和社会发展中迫切需要解决的关键科技
     问题来论述其应用前景。附主要参考文献目录}；}
-
 对于高校教师和研究人员来说，国家自然科学基金（National Natural Science Foundation of China，NSFC）非常重要，写出能让所有专家都满意的本子也相当的耗时。对于平时只采用 LaTeX 格式投稿论文的老师来说，由于基金委只给出了 Word 模板，这种切换大致会有下面一些不方便：
 \begin{itemize}
 	\item 本子中很可能会用到以往小论文中的公式、图表以及参考文献，无法直接复制粘贴，要将一模一样的内容从 LaTeX 转换成 Word 需要不少时间；
 	\item Word 中对参考文献、图表、公式的交叉引用没有 LaTeX 来的方便。
 \end{itemize}
 
-\paragraph{第一点}
+\subparagraph{第一点}
 
 很自然的，如果能有一个国家自然基金的 LaTeX 模板就好了，可以挤出更多的时间来关注内容，而非格式以及排列参考文献这种机械无聊的事情上。
 
@@ -93,6 +97,8 @@ demo.tex 用 LuaLaTeX 也可以编译通过，但标题加粗部分会不再是�
 % 章名字体 \mintinline{TeX}{\setmainfont{KaiTi}} 需要改为 \mintinline{TeX}{\setmainfont{STKaiti}} (注意大小写）
 % 节序号字体 \mintinline{TeX}{\setmainfont{KaiTi}} 改为 \mintinline{TeX}{\setmainfont{STHei}} (Mac 中楷体数字字体都对不上)
 
+\paragraph{第四级标题}
+
 
 \subsection{字体}
 就个人审美而言，正文使用楷体比宋体更加美观。所以我们专门设置了楷体，如果用户想要将自己的内容设置为宋体，只需在 .tex 文件中将下列代码注释掉：
@@ -143,7 +149,7 @@ demo.tex 用 LuaLaTeX 也可以编译通过，但标题加粗部分会不再是�
 
 % 因为写 demo，我把参考文献放这里了，真写本子的时候，还是要放在国内外概况那边
 \begin{spacing}{1.3} % 行距
-	\zihao{5} \songti
+	\zihao{5}
 	\bibliographystyle{../iNSFC/gbt7714-nsfc.bst}
 	\bibliography{../iNSFC/ref.bib}
 	\vspace{11bp}
@@ -164,9 +170,10 @@ demo.tex 用 LuaLaTeX 也可以编译通过，但标题加粗部分会不再是�
 
 这段文字用来测试正文与公式的间距。
 \begin{equation}
+  \label{eq:emc}
 	E = MC^2
 \end{equation}
-这段文字用来测试正文与公式的间距。
+\cref{eq:emc}用来测试正文与公式的间距。
 
 \subsection{插图和表格}
 图题和标题序号后默认为空格，如果想改成 点、或者冒号，可以在导言区的下列两行代码中修改
@@ -239,5 +246,10 @@ demo.tex 用 LuaLaTeX 也可以编译通过，但标题加粗部分会不再是�
 	2017 年 2 月 27 日\\
 }
 
+\nocitepub{*}
+
+\setlength{\labelwidth}{2em}
+\bibliographystylepub{../iNSFC/gbt7714-nsfc.bst}
+\bibliographypub{../../cv/publication.bib}
 
 \end{document}
