@@ -1,5 +1,13 @@
 \ProvidesPackage{nsfc}[2019/02/20 0.1]
 
+\newcommand\nsfcfont\kaishu
+\DeclareOption{kai}{
+}
+\DeclareOption{song}{
+  \renewcommand\nsfcfont\songti
+}
+\ProcessOptions\relax
+
 %% language support
 \RequirePackage[UTF8,punct]{ctex}
 \RequirePackage{fontspec}
@@ -16,7 +24,9 @@
 \RequirePackage{xcolor}
 \definecolor{NsfcBlue}{RGB}{0, 112, 192}
 
-\newcommand\note[1]{{\normalfont\kaishu{（#1)}}}
+\newcommand\note{\@ifstar\@note\@@note}
+\newcommand\@note[1]{\normalfont\nsfcfont{#1}}
+\newcommand\@@note[1]{\normalfont\nsfcfont{（#1）}}
 \newcommand\nsfcfy[1]{{\color{NsfcBlue}#1}}
 \newcommand\nsfcbf[1]{{\textbf{\nsfcfy{#1}}}}
 \newcommand\alert\nsfcbf
@@ -25,7 +35,7 @@
 
 \renewcommand\maketitle{
   \begingroup
-  \kaishu
+  \nsfcfont
   \begin{center}
 	  \zihao{2} \textbf{报告正文}
   \end{center}
@@ -43,12 +53,13 @@
 
 \newcommand\chapter[1]{
   \begingroup
+  \nsfcfont
   \ifnum\value{chapter}=0\vskip 9bp\else\vskip 22bp\fi
   \stepcounter{chapter}
   \setcounter{section}{0}
   \setlength{\baselineskip}{22bp}
   \zihao{4}
-  \indent\nsfcbf{（\chinese{chapter}）}\nsfcbf{#1}
+  \nsfcbf{（\chinese{chapter}）}\nsfcbf{#1}
   \vskip 9bp
   \endgroup
 }
@@ -56,16 +67,18 @@
 \renewcommand\section{\@ifstar\@@section\@section}
 \newcommand\@section[1]{
   \begingroup
+  \nsfcfont
   \ifnum\value{section}=0\else\vskip 22bp\fi
   \stepcounter{section}
   \setcounter{subsection}{0}
   \zihao{4}
-  \indent\nsfcfy{\thesection.}~\nsfcbf{\nsfcbf{#1}}
+  \indent\nsfcfy{\thesection.}~\nsfcbf{#1}
   \vskip 0.5\baselineskip
   \endgroup
 }
 \newcommand\@@section[1]{
   \begingroup
+  \nsfcfont
   \vspace{22bp}
   \zihao{4}
   \indent{\textbf{#1}}\par
@@ -73,18 +86,20 @@
   \endgroup
 }
 
-\titleformat{\subsection}{\zihao{4}\bfseries}{\hspace{1.75em}\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\zihao{-4}\bfseries}{\hspace{2em}\thesubsubsection}{1em}{}
-\titleformat{\paragraph}[block]{}{\hspace{2em}\theparagraph}{1em}{}
+\titleformat{\subsection}{\nsfcfont\zihao{4}\bfseries}{\hspace{1.75em}\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\nsfcfont\zihao{-4}\bfseries}{\hspace{2em}\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[block]{\nsfcfont}{\hspace{2em}\theparagraph}{1em}{}
 
 \renewcommand\subparagraph{\@ifstar\@subparagraph\@@subparagraph}
 \newcommand\@subparagraph[1]{
   \begingroup
+  \nsfcfont
   \indent{\textbf{#1}}
   \endgroup
 }
 \newcommand\@@subparagraph[1]{
   \begingroup
+  \nsfcfont
   \stepcounter{subparagraph}
   \indent{（\arabic{subparagraph}）}\textbf{#1}
   \endgroup
@@ -97,6 +112,9 @@
 
 \renewcommand\bibname{\textbf{\kaishu{参考文献}}}
 \renewcommand*{\bibfont}{\zihao{5}}
+
+\RequirePackage[resetlabels]{multibib}
+\newcites{pub}{代表性论著}
 
 %% figures, tables and math
 
