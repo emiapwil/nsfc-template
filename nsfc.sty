@@ -52,11 +52,11 @@
 \newcounter{chapter}
 
 \newcommand\chapter[1]{
+  \refstepcounter{chapter}
+  \setcounter{section}{0}
   \begingroup
   \nsfcfont
   \ifnum\value{chapter}=0\vskip 9bp\else\vskip 22bp\fi
-  \stepcounter{chapter}
-  \setcounter{section}{0}
   \setlength{\baselineskip}{22bp}
   \zihao{4}
   \nsfcbf{（\chinese{chapter}）}\nsfcbf{#1}
@@ -66,11 +66,11 @@
 
 \renewcommand\section{\@ifstar\@@section\@section}
 \newcommand\@section[1]{
+  \refstepcounter{section}
+  \setcounter{subsection}{0}
   \begingroup
   \nsfcfont
   \ifnum\value{section}=0\else\vskip 22bp\fi
-  \stepcounter{section}
-  \setcounter{subsection}{0}
   \zihao{4}
   \indent\nsfcfy{\thesection.}~\nsfcbf{#1}
   \vskip 0.5\baselineskip
@@ -98,9 +98,9 @@
   \endgroup
 }
 \newcommand\@@subparagraph[1]{
+  \refstepcounter{subparagraph}
   \begingroup
   \nsfcfont
-  \stepcounter{subparagraph}
   \indent{（\arabic{subparagraph}）}\textbf{#1}
   \endgroup
 }
