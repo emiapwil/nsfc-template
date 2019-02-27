@@ -1,12 +1,26 @@
 \ProvidesPackage{nsfc}[2019/02/20 0.1]
 
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=nsfc,
+  prefix=nsfc@,
+  setkeys=\kvsetkeys}
+\DeclareBoolOption[true]{kai}
+\DeclareBoolOption[false]{song}
+\DeclareStringOption[-4]{fontsize}
+\DeclareStringOption[plain]{bibstyle}[plain]
+\ProcessKeyvalOptions*\relax
+
 \newcommand\nsfcfont\kaishu
-\DeclareOption{kai}{
+\newif\ifnsfc@song
+\ifnsfc@song
+\renewcommand\nsfcfont\songti
+\fi
+
+\AtBeginDocument{
+  \nsfcfont
+  \zihao{\nsfc@fontsize}
 }
-\DeclareOption{song}{
-  \renewcommand\nsfcfont\songti
-}
-\ProcessOptions\relax
 
 %% language support
 \RequirePackage[UTF8,punct]{ctex}
@@ -56,11 +70,10 @@
   \setcounter{section}{0}
   \begingroup
   \nsfcfont
-  \ifnum\value{chapter}=0\vskip 9bp\else\vskip 22bp\fi
+  \ifnum\value{chapter}=1\vskip 9bp\else\vskip 22bp\fi
   \setlength{\baselineskip}{22bp}
   \zihao{4}
   \nsfcbf{（\chinese{chapter}）}\nsfcbf{#1}
-  \vskip 9bp
   \endgroup
 }
 
@@ -70,11 +83,12 @@
   \setcounter{subsection}{0}
   \begingroup
   \nsfcfont
-  \ifnum\value{section}=0\else\vskip 22bp\fi
+  \ifnum\value{section}=1\vskip 0.5\baselineskip \else\vskip 22bp\fi
   \zihao{4}
   \indent\nsfcfy{\thesection.}~\nsfcbf{#1}
   \vskip 0.5\baselineskip
   \endgroup
+  \bibunit[\nsfc@bibstyle]
 }
 \newcommand\@@section[1]{
   \begingroup
@@ -100,21 +114,20 @@
 \newcommand\@@subparagraph[1]{
   \refstepcounter{subparagraph}
   \begingroup
+  \vskip 0.25\baselineskip
   \nsfcfont
   \indent{（\arabic{subparagraph}）}\textbf{#1}
+  \vskip 0.25\baselineskip
   \endgroup
 }
 
 %% references
 \RequirePackage[sectionbib,super,square,numbers,sort&compress]{natbib}   % For Reference
-\newcommand{\citess}{\cite}
+\RequirePackage{bibunits}
 \setlength{\bibsep}{1pt plus 0.3ex}
 
 \renewcommand\bibname{\textbf{\kaishu{参考文献}}}
 \renewcommand*{\bibfont}{\zihao{5}}
-
-\RequirePackage[resetlabels]{multibib}
-\newcites{pub}{代表性论著}
 
 %% figures, tables and math
 
