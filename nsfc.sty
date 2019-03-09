@@ -5,6 +5,7 @@
   family=nsfc,
   prefix=nsfc@,
   setkeys=\kvsetkeys}
+\DeclareBoolOption[false]{ulem}
 \DeclareBoolOption[true]{kai}
 \DeclareBoolOption[false]{song}
 \DeclareStringOption[-4]{fontsize}
@@ -12,7 +13,6 @@
 \ProcessKeyvalOptions*\relax
 
 \newcommand\nsfcfont\kaishu
-\newif\ifnsfc@song
 \ifnsfc@song
 \renewcommand\nsfcfont\songti
 \fi
@@ -160,3 +160,10 @@
 \usepackage[inline]{enumitem}
 \setlist[enumerate]{itemsep = 0pt, parsep = 0pt, topsep = 2bp}
 \setlist[itemize]{itemsep = 0pt, parsep = 0pt, topsep = 2bp}
+
+%% underline
+\usepackage{ulem}
+
+\ifnsfc@ulem
+\renewcommand\emph\uline
+\fi
